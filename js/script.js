@@ -1,33 +1,68 @@
-let numero = 1
-while (numero <= 10) {//
-    console.log(numero)
-    numero ++
-}
-console.log('fin de los numeros '+numero)
-//busque informacion de como generar un nuemero random del 1 al 10 en internet
-let numeroMaquina = Math.floor(Math.random() * (10 - 1)) + 1; 
-console.log(numeroMaquina)
+const productos = [
+    {nombre: "harina", precio: 90},
+    {nombre: "galletitas", precio: 70},
+    {nombre: "cerveza", precio: 300},
+    {nombre: "leche", precio: 100},
+    {nombre: "gaseosa", precio: 200}
+];
 
-let vidas = 3
-let numeroUsuario = parseInt(prompt('Adivina el numero del 1 al 10'))
+let carrito = []
 
-while(numeroMaquina !== numeroUsuario && vidas > 1){
-    let mensaje = (numeroMaquina > numeroUsuario) ? 'el numero es mayor' : 'el numero es menor'
-
-
-    console.log('te equivocaste')
-    numeroUsuario = parseInt(prompt('le erraste, eleji denuevo un numero del 1 al 10 ' + mensaje))
-    vidas --
-
+let seleccion = prompt("Hola, desea comprar algun producto?")
+while(seleccion != "si" && "no") {
+    alert("Porfavor, ingresa si o no")
+    seleccion = prompt("hola desea comprar algo? si o no")
 }
 
+if(seleccion === "si"){
+    alert("a continuacion nuestra lista de productos")
+    let todoslosproductos = productos.map((producto) => producto.nombre + " " + producto.precio + "$")
+    alert(todoslosproductos.join(" - "))
+} else if (seleccion == "no"){
+    alert("Gracias por venir, vuelva pronto")
+};
 
+while(seleccion != "no"){
+    let producto = prompt("Agrega un producto a tu carrito")
+    let precio = 0
 
-if (numeroMaquina === numeroUsuario){
-    alert('Adivinaste el numero!! GANASTE')
-    console.log('ganaste')
+    if(producto == "harina" || producto == "galletitas" || producto == "cerveza" || producto == "leche" || producto == "gaseosa"){
+        switch(producto){
+            case "harina":
+                precio = 90;
+                break;
+                    case "galletitas":
+                        precio = 70;
+                        break;
+                        case "cerveza":
+                            precio = 300;
+                            break;
+                            case "leche":
+                                precio = 100;
+                                break;
+                                case "gaseosa":
+                                    precio = 200;
+                                    break;
+            default: 
+            break;
+        }
+        let unidades = parseInt(prompt("cuantas unidades quiere llevar?"))
+
+        carrito.push({producto, unidades, precio})
+    }else{
+        alert("no tenemos ese producto")
+    }
+
+    seleccion = prompt("desea seguir comprando?")
+    while(seleccion == "no"){
+        alert("Gracias por su compra")
+        carrito.forEach((carritoFinal) => {
+            console.log(`producto: ${carritoFinal.producto}, unidades: ${carritoFinal.unidades}, total a pagar por producto${carritoFinal.unidades * carritoFinal.precio} `)
+        })
+        break;
+    }
 }
-else{
-    alert('Perdiste, no lograste adivinar el numero')
-    console.log('perdiste burrito')
-}
+
+const total = carrito.reduce((acc, el) => acc + el.precio * el.unidades, 0) 
+console.log(`el total a pagar por su compra es: ${total} `)
+
